@@ -1,10 +1,9 @@
 <template>
   <h1>Reaction Timer Game!</h1>
-  <button @click="start" :disabled="isPlaying">PLAY</button>
+  <Results v-if="showResult" :score="score"/>
 
+  <button @click="start" :disabled="isPlaying">PLAY</button>
   <Block v-if="isPlaying" :delay="delay" @end="endGame"/>
-  <p v-if="showResult">Reaction time is {{ score }}</p>
-  <Results />
 
 </template>
 
