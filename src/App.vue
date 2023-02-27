@@ -2,26 +2,37 @@
   <h1>Reaction Timer Game!</h1>
   <button @click="start" :disabled="isPlaying">PLAY</button>
 
-  <Block v-if="isPlaying" :delay="delay"/>
+  <Block v-if="isPlaying" :delay="delay" @end="endGame"/>
+  <p v-if="showResult">Reaction time is {{ score }}</p>
+  <Results />
 
 </template>
 
 <script>
 import Block from './components/Block.vue'
+import Results from './components/Results.vue'
 
 export default {
   name: 'App',
-  components: { Block },
+  components: { Block, Results },
   data() {
     return {
       isPlaying: false,
-      delay: null
+      delay: null,
+      score: null,
+      showResult: false
     }
   },
   methods: {
     start() {
       this.delay = 2000 + Math.random() * 5000
       this.isPlaying = true
+      this.showResult = false
+    },
+    endGame(reactionTime) {
+      this.score = reactionTime + ' ms',
+      this.isPlaying = false
+      this.showResult = true
     }
   }
 }
